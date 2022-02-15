@@ -1,6 +1,8 @@
 import logging
 
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters 
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+
+import settings 
 
 logging.basicConfig(filename='bot.log', level=logging.INFO)
 
@@ -18,7 +20,7 @@ def talk_to_me(update, context):
 def main():
 
 
-    mybot = Updater("5151686095:AAEOQ9HpV40J2RwZ0Vfs_mnRachGLNE2n2Q", use_context = True)
+    mybot = Updater(settings.API_KEY, use_context = True)
    
     dp = mybot.dispatcher
     dp.add_handler(CommandHandler("start", greet_user))
@@ -29,4 +31,5 @@ def main():
     mybot.start_polling()
     mybot.idle()
 
-main()
+if __name__ == "__main__":
+    main()

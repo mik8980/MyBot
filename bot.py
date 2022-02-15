@@ -1,6 +1,6 @@
 from telegram.ext import Updater, CommandHandler
 def greet_user(update, context):
-    print('Вызван /start')
+    print('Вызван ... Да никто не вызван!')
     
 def main():
 

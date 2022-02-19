@@ -1,6 +1,6 @@
 import logging
 import ephem
-import datetime
+from datetime import datetime
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
@@ -27,9 +27,9 @@ def get_planet(update, context):
     answer = ''
     if bool(planet):
         if planet == 'Mars':
-            answer = ephem.constellation(ephem.Mars('19/02/2022'))
+            answer = ephem.constellation(ephem.Mars(datetime.today()))
         elif planet == 'Jupiter':
-            answer = ephem.constellation(ephem.Jupiter('19/02/2022'))
+            answer = ephem.constellation(ephem.Jupiter(datetime.today()))
         else: 
             answer = 'Нет информации'  
     update.message.reply_text(answer)

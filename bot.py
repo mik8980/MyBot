@@ -1,38 +1,16 @@
 import logging
-import ephem
-from datetime import datetime
+
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+from commands.get_planet import get_planet
+from commands.start import greet_user
+from commands.talk_to_me import talk_to_me
+from commands.wordcount import wordcount
+from commands.next_full_moon import next_full_moon
 
 import settings 
 
 logging.basicConfig(filename='bot.log', level=logging.INFO)
-
-
-def greet_user(update, context):
-    print('Вызван /start ')
-    update.message.reply_text('Привет, пользователь! Ты вызвал команду /start ')
-
-def talk_to_me(update, context):
-    user_text = update.message.text
-    print(user_text)
-    update.message.reply_text(user_text)
-
-def get_planet(update, context):
-    user_text = update.message.text.split()
-    if len(user_text) == 1: 
-        update.message.reply_text('Введите планету')
-        return
-    planet = user_text[1]
-    answer = ''
-    if bool(planet):
-        if planet == 'Mars':
-            answer = ephem.constellation(ephem.Mars(datetime.today()))
-        elif planet == 'Jupiter':
-            answer = ephem.constellation(ephem.Jupiter(datetime.today()))
-        else: 
-            answer = 'Нет информации'  
-    update.message.reply_text(answer)
 
 
 
@@ -44,8 +22,10 @@ def main():
     dp = mybot.dispatcher
     dp.add_handler(CommandHandler("start", greet_user))
     dp.add_handler(CommandHandler("planet", get_planet ))
+    dp.add_handler(CommandHandler("wordcount", wordcount))
+    dp.add_handler(CommandHandler("next_full_moon", next_full_moon))
     dp.add_handler(MessageHandler(Filters.text, talk_to_me))
-  
+    
   
     logging.info("Бот стартовал")
     mybot.start_polling()
